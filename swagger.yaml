@@ -1,0 +1,124 @@
+swagger: "2.0"
+info:
+  description: "API documentation for BookController"
+  version: "1.0.0"
+  title: "Book API"
+basePath: "/api"
+paths:
+  /books:
+    post:
+      tags:
+        - "Books"
+      summary: "Add a book"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "bookDTO"
+          description: "Book data"
+          schema:
+            $ref: "#/definitions/BookDTO"
+      responses:
+        201:
+          description: "Book added successfully"
+          schema:
+            $ref: "#/definitions/BookDTO"
+    get:
+      tags:
+        - "Books"
+      summary: "Get all books"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "type"
+          description: "Type of the book"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "volumeGreaterThan"
+          description: "Volume greater than"
+          required: false
+          type: "integer"
+        - in: "query"
+          name: "author"
+          description: "Author of the book"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "genre"
+          description: "Genre of the book"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "excludeGenre"
+          description: "Excluded genre of the book"
+          required: false
+          type: "string"
+      responses:
+        200:
+          description: "List of books"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/BookDTO"        
+  /books/{bookId}:
+    put:
+      tags:
+        - "Books"
+      summary: "Update a book"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "bookId"
+          description: "ID of the book to be updated"
+          required: true
+          type: "integer"
+        - in: "body"
+          name: "bookDTO"
+          description: "Updated book data"
+          schema:
+            $ref: "#/definitions/BookDTO"
+      responses:
+        200:
+          description: "Book updated successfully"
+          schema:
+            $ref: "#/definitions/BookDTO"
+    delete:
+      tags:
+        - "Books"
+      summary: "Remove a book"
+      produces:
+        - "text/plain"
+      parameters:
+        - in: "path"
+          name: "bookId"
+          description: "ID of the book to be removed"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Book removed successfully"
+          schema:
+            type: "string"
+        404:
+          description: "Book not found"
+definitions:
+  BookDTO:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+      genre:
+        type: "string"
+      author:
+        type: "string"
+      bookName:
+        type: "string"
+      volume:
+        type: integer
